@@ -1,0 +1,4 @@
+﻿3rd party libary를 추가할 때는 dependencies에 추가해주면 됨. 
+
+그러나 바로 사용은 아니고 플젝 gradle을 build해야지 해당 라이브러리를 사용할 수 있다.
+아마 npm과 대응해서 생각하면 더 이해하기 쉬울 것 같다.
