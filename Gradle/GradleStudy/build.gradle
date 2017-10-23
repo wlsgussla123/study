@@ -1,0 +1,37 @@
+apply plugin: 'java' //Gradle에서 java로 eclipse 개발, eclipse를 사용한다는 것을 명시 (웹일 경우는 또 바뀌겠지)
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8 //default가 1.5로 되어있는데, 자바 1.8을 사용하니까 변경.
+
+version = '1.0' //jar파일 버전
+//jar파일 생성 command, jar파일은 default이지만, war과 ear파일은 default가 아니기 때문에 사용할 떄, apply plugin: 'war'처럼 명시해야 함.
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': version//위의 version을 참조
+    }
+}
+
+//maven reporitory
+repositories {
+    mavenCentral()
+}
+
+//의존성 라이브러리 주입, 라이브러리들이 자동으로 빌드된다.
+//Define project dependencies, gradle은 MavenReporitory로부터 jar files을 참조하고, 다운로드 할 것.(project build path에 추가됨)
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    testCompile group: 'junit', name: 'junit', version: '4.+' //testCompile을 위한 정의
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}

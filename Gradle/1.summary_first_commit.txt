@@ -1,0 +1,21 @@
+﻿1. 프로젝트를 Run As Gradle로 빌드가 된다. 웹이면 war파일로 추출하겠지만,
+일단은 테스트용 자바파일이기 때문에 jar파일로 빌드
+
+명령어는
+clean
+cleanEclipse
+eclipse
+jar
+
+이렇게 하면 된다. Run을 하면 Build가 되어서 build 폴더가 생기는 것을 볼 수 있다.
+
+** 정상적이면 "BUILD SUCCESSFUL"이 나타난다.
+
+build 폴더
+
+1. classes : .class files이 컴파일 된 것들 from JAVA code. 그 예로 GradleStudy.class와 Greeter.class를 볼 수 있다.
+2. libs : Assembled project libraries (JAR and/or WAR files)
+3. dependency_cache folder : 다른 라이브러리 의존성이 있다면 무엇인가 생길 것. 지금은 기본이라 없는 듯.
+
+4. reports folder : a report of running unit tests on the project // jUnit으로 단위테스트를 한 것들을 기록하는 곳 같다.
+								  // 아직은 단위테스트를 모르니 추후에 하자.
