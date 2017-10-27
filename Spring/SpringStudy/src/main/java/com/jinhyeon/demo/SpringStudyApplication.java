@@ -16,20 +16,10 @@ import com.jinhyeon.demo.domain.User;
 public class SpringStudyApplication {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//		SpringApplication.run(SpringStudyApplication.class, args);
-		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-		UserDao dao = context.getBean("userDao", UserDao.class); // 두 번째는 리턴타입.
+		// Dependency Lookup을 사용할 것이기 때문에, 주입을 받지 않는다. 
+		UserDao dao = new UserDao();
 		
-		User user = new User();
-//		user.setId("3");
-//		user.setName("김재섭");
-//		user.setPassword("1111");
-//		
-//		dao.add(user);
-		
-//		System.out.println(user.getId() + "등록 성공");
-		
-		User user2 = dao.get("3");
+		User user2 = dao.get("1");
 		System.out.println(user2.getName());
 		System.out.println(user2.getPassword());
 

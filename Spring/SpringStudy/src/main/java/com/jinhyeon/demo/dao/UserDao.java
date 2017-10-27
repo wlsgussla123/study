@@ -6,13 +6,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import com.jinhyeon.demo.domain.User;
 
 public class UserDao {		
 	private ConnectionMaker connectionMaker;
 
-	public UserDao(ConnectionMaker connectionMaker) {
-		this.connectionMaker = connectionMaker;
+	public UserDao() {
+//		this.connectionMaker = connectionMaker;
+		
+		// Dependency Lookup, 스스로 Connectionmaker object를 가져오게 만들 수 있다.
+		// 스스로 IoC 컨테이너인 DaoFactory에게 요청을 하고 잇음. 
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		this.connectionMaker = context.getBean("connectionMaker", ConnectionMaker.class);
 	}
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
