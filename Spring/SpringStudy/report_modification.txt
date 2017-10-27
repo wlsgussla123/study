@@ -1,53 +1,20 @@
-﻿스프링 IoC 기능의 대표적인 동작원리는 주로 의존관계 주입 (Dependency Injection)이라고 한다.
-스프링이 컨테이너, 프레임워크이므로 기본적인 동작원리가 모두 IoC 방식이지만, 
-다른 프레임워크와의 차별화 된 기능이 DI를 통해서 분명하게 드러난다.
+﻿앞서, DI를 이용하여 UserDao가 ConnectionMaker를 사용할 수 있도록 주입하였다. 
+스프링의 Application Context를 이용한 방식과 DaoFactory 내에서 자체적으로 주입시키는 방법도 해봤다.
 
-의존 관계?
-A -> B라고 할 때, A가 B에 의존하고 있다고 한다. 즉, B가 변하면 A에 영향을 미치는 것이다.
-ex) A가 B에 정의된 메소드를 호출해서 사용하는 경우. 
-	-> B의 메서드의 내부가 변경되는 경우
-	-> B의 메서드의 형식이 바뀌는 경우
-	-> B의새로운 메서드가 추가되는 경우
+DI의 장점은 
+1. 코드에 런타임 클래스에 대한 의존관계가 나타나지 않고, 
+2. 인터페이스를 통해 결합도가 낮은 코드를 만든다.
 
+이 덕분에 다른 책임을 가진 사용 의존관계에 있는 대상이 변경되어도 영향을 받지 않고,
+확장을 할 때도 용이하게 할 수 있다는 장점이 있다.
 
-* dependent object : 실제 사용대상.
-
-DI는 구체적인 의존 object와 그것을 사용할 주체, client object를 런타임 시에 연결해주는 작업.
-
-DI란 다음의 세 가지 조건을 충족하는 작업.
-
-조건 1.
-: 클래스 모델이나 코드에는 런타임 시점의 의존관계가 드러나지 않는다. 
-(connectionMaker = new DConnectionMaker() 과 같은 것..) , 드러나지 않기 위해서는 인터페이스에 의존해야함
-
-조건 2.
-: 런타임 시점의 의존관계는 컨테이너나 팩토리 같은 제3의 존재가 결정.
-
-조건 3.
-: 의존관계는 사용할 오브젝트에 대한 렌퍼런스를 외부에서 주입함으로써 만들어진다.
-
-DI는 자신이 사용할 오브젝트에 대한 선택과 생성 제어권을 외부로 넘기고 자신은 수동적으로 주입받은
-object를 사용한다는 점에서 스프링의 IoC 개념과 잘 맞는다. 
-
----------
-
-스프링에는 DI 말고 Dependency Lookup도 존재. (의존관계 검색)
-- 자신이 필요로 하는 object를 능동적으로 찾는 것.
-- 그러나 물자신이 어떤 클래스의 object를 사용할지 결정하지 않음. (IoC에 위배)
-
--> 의존관계 검색은 런타임 시 의존관계를 맺을 오브젝트를 결정하는 것과 오브젝트의 생성 작업은
-외부 컨테이너에 IoC로 맡기지만, 이를 가져올 땐 메소드나 생성자를 통한 주입 대신 
-스스로 컨테이너에게 요청하는 방법 !!!
+지금까지의 예제를 보면, UserDao가 ConnectionMaker 인터페이스에만 의존하고 있는데,
+** 이 뜻은 ConnectionMaker를 구현하기만 하고 있다면 어떤 object라도 사용할 수 있다는 뜻이다.
 
 
-의존관계 주입 vs 의존관계 검색
-: DL에는 object 자신이 스프링의 빈일 필요가 없다. 
-UserDao에 스프링의 getBean)을 이용한 DL을 사용한 예를 봤을 때 (다음 줄)
-	this.connectionMaker = context.getBean("connectionMaker", ConnectionMaker.class);
-스프링은 connectionMaker만 bean이면 된다.
+**** Counting 예제 분석
+1. dao 설정
 
-DI에는 UserDao와 ConnectionMaker 사이에 DI가 적용되려면, UserDao도 반드시 bean object여야 한다.
--> 이유 ? 컨테이너가 UserDao에 ConnectionMaker object를 주입해주려면 UserDao에 대한 생성과 초기화 권한을
-갖고 있어야 하고, 그러려면 UserDao는 IoC 방식으로 컨테이너에서 생성되는 오브젝트 (bean) 이어야 하기 때문.
+2. UserDao에 DConnectionMaker가 주입된 CountingConnectionMaker가 생성.
 
-*** 결론 : DI를 원하는 object는 자기 자신이 container에 의해서 간리되는 빈이 돼야한다.
+3. UserDao에 CountingConnectionMaker 주입
