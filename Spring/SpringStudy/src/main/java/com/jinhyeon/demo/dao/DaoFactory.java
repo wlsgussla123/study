@@ -6,10 +6,18 @@ import org.springframework.context.annotation.Configuration;
 // 오브젝트를 생성하는 쪽과 생성된 오브젝트를 사용하는 쪽의 역할과 책임을 분리하기 위한 클래스. 
 @Configuration // will use by application context or bean factory
 public class DaoFactory {
-	@Bean // 오브젝트 생성을 담당하는 IoC용 메소드
+//	@Bean // 오브젝트 생성을 담당하는 IoC용 메소드
+//	public UserDao userDao() {
+//		ConnectionMaker connectionMaker = connectionMaker(); // 팩토리 메서드는 UserDao 타입의 오브젝트를 어떻게 만들고, 준비시킬지를 결정.
+//		UserDao userDao = new UserDao(connectionMaker);
+//		return userDao;
+//	}
+	
+	// 수정자 메서드 DI를 사용하는 팩토리 메서드
+	@Bean
 	public UserDao userDao() {
-		ConnectionMaker connectionMaker = connectionMaker(); // 팩토리 메서드는 UserDao 타입의 오브젝트를 어떻게 만들고, 준비시킬지를 결정.
-		UserDao userDao = new UserDao(connectionMaker);
+		UserDao userDao = new UserDao();
+		userDao.setConnectionMaker(connectionMaker());
 		return userDao;
 	}
 	

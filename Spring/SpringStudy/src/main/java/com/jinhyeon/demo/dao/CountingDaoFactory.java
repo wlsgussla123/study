@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 // 새로운 의존관계 설정 정보
 @Configuration
 public class CountingDaoFactory {
-	@Bean
-	public UserDao userDao() {
-		return new UserDao(connectionMaker());
-	}
+//	@Bean
+//	public UserDao userDao() {
+//		return new UserDao(connectionMaker());
+//	}
 	
 	@Bean
 	public ConnectionMaker connectionMaker() {

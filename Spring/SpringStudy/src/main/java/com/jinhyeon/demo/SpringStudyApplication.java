@@ -18,23 +18,25 @@ import com.jinhyeon.demo.domain.User;
 public class SpringStudyApplication {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-//		SpringApplication.run(SpringStudyApplication.class, args);
-//		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-//		UserDao dao = context.getBean("userDao", UserDao.class); // 두 번째는 리턴타입.
-
-		ApplicationContext context = new AnnotationConfigApplicationContext(CountingDaoFactory.class);
-		UserDao dao = context.getBean("userDao", UserDao.class);
-		
-		dao.get("2"); // db connection 만들기 위하여
-
-		// DAO 사용코드
-		CountingConnectionMaker ccm = context.getBean("connectionMaker", CountingConnectionMaker.class);
-	
-		System.out.println("connection counter : " + ccm.getCounter());
-//		User user2 = dao.get("3");
-//		System.out.println(user2.getName());
-//		System.out.println(user2.getPassword());
+//		ApplicationContext context = new AnnotationConfigApplicationContext(CountingDaoFactory.class);
+//		UserDao dao = context.getBean("userDao", UserDao.class);
+//		
+//		dao.get("2"); // db connection 만들기 위하여
 //
-//		System.out.println(user2.getId() + "조회 성공");
+//		// DAO 사용코드
+//		CountingConnectionMaker ccm = context.getBean("connectionMaker", CountingConnectionMaker.class);
+//	
+//		System.out.println("connection counter : " + ccm.getCounter());
+		
+//		SpringApplication.run(SpringStudyApplication.class, args);
+
+		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		UserDao dao = context.getBean("userDao", UserDao.class); // 두 번째는 리턴타입.
+
+		User user2 = dao.get("1");
+		System.out.println(user2.getName());
+		System.out.println(user2.getPassword());
+
+		System.out.println(user2.getId() + "조회 성공");
 	}
 }

@@ -13,7 +13,12 @@ import com.jinhyeon.demo.domain.User;
 public class UserDao {		
 	private ConnectionMaker connectionMaker;
 
-	public UserDao(ConnectionMaker connectionMaker) {
+//	public UserDao(ConnectionMaker connectionMaker) {
+//		this.connectionMaker = connectionMaker;
+//	}
+	
+	// 수정자 메서드 DI 방식을 사용한 UserDao
+	public void setConnectionMaker(ConnectionMaker connectionMaker) {
 		this.connectionMaker = connectionMaker;
 	}
 	
