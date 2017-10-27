@@ -9,19 +9,14 @@ import java.sql.SQLException;
 import com.jinhyeon.demo.domain.User;
 
 public class UserDao {		
-	private Connection getConnection() throws ClassNotFoundException, SQLException {
-		String dbUrl = "jdbc:oracle:thin:@localhost:1521:xe";
-		String id = "jinhyeon";
-		String pwd = "****";
+	private ConnectionMaker connectionMaker;
 
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection conn = DriverManager.getConnection(dbUrl, id, pwd);
-		
-		return conn;
+	public UserDao() {
+		connectionMaker = new DConnectionMaker();
 	}
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Connection conn = getConnection();
+		Connection conn = connectionMaker.makeConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement("insert into users(id, name, password) values (?,?,?)");
 		pstmt.setString(1,  user.getId());
@@ -35,7 +30,7 @@ public class UserDao {
 	}
 	
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Connection conn = getConnection();
+		Connection conn = connectionMaker.makeConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement("select * from users where id = ?");
 		pstmt.setString(1,id);
