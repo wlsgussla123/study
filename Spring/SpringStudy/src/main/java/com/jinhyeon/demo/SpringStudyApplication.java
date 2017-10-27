@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.jinhyeon.demo.dao.DConnectionMaker;
+import com.jinhyeon.demo.dao.DaoFactory;
 import com.jinhyeon.demo.dao.UserDao;
 import com.jinhyeon.demo.domain.User;
 
@@ -14,7 +15,7 @@ public class SpringStudyApplication {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 //		SpringApplication.run(SpringStudyApplication.class, args);
-		UserDao dao = new UserDao(new DConnectionMaker());
+		UserDao dao = new DaoFactory().userDao(); // 관심사를 분리시켰다!
 		
 		User user = new User();
 //		user.setId("3");
