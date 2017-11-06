@@ -6,22 +6,6 @@
 const path = require('path')
 
 module.exports = {
-  module: {
-    rules: [{
-        test: /\.scss$/,
-        use: [{
-            loader: "style-loader"
-        }, {
-            loader: "css-loader"
-        }, {
-            loader: "sass-loader",
-            options: {
-                includePaths: ["absolute/path/a", "absolute/path/b"]
-            }
-        }]
-    }]
-  },
-  
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -54,5 +38,5 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
-  },
+  }
 }
