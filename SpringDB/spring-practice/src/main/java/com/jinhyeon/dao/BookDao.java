@@ -3,20 +3,23 @@ package com.jinhyeon.dao;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-// dao´Â DB¿¡ Á¢¼ÓÇÏ°í Äõ¸®¸¦ È£ÃâÇÏ´Â ¿ªÇÒ.
+// daoëŠ” DBì— ì ‘ì†í•˜ê³  ì¿¼ë¦¬ë¥¼ í˜¸ì¶œí•˜ëŠ” ì—­í• .
 public class BookDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private static final String COUNT_BOOK = "SELECT COUNT(*) FROM book";
 	
-	// dataSource ÁÖÀÔ (connection pool·ÎºÎÅÍ ¹Ş¾Æ¾ß jdbc¸¦ »ç¿ëÇÏÁö)
-	public BookDao(DriverManagerDataSource dataSource) {
+	// dataSource ì£¼ì… (connection ì—°ê²° ê°ì²´ë¼ê³  ìƒê°í•˜ì.)
+	// íŒŒë¼ë¯¸í„° typeì„ DataSourceë¡œ ë³€ê²½(ì¸í„°í˜ì´ìŠ¤), ì´ì „ì˜ DriverManagerDataSource ì½”ë“œ ë³€ê²¨
+	public BookDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
-	// ½ÇÁ¦ DB Á¢¼Ó Äõ¸®
+	// ì‹¤ì œ DB ì ‘ì† ì¿¼ë¦¬
 	public int countBooks() {
 		Map<String, Object> params = Collections.emptyMap();
 		return jdbc.queryForObject(COUNT_BOOK, params, Integer.class);
