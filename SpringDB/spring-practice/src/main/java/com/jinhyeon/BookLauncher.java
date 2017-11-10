@@ -21,17 +21,28 @@ public class BookLauncher {
 
 		BookDao dao = context.getBean(BookDao.class);
 		int count = dao.countBooks();	
-		System.out.println(count);
+//		System.out.println(count);
 		
+		// select
 		Book book = dao.selectById(1);
 		System.out.println(book);
 		
-		Book book2 = new Book("백도현", "건축기사", 520);
-		Integer newId = dao.insert(book2);
-		System.out.println(newId);
+//		 insert
+//		Book book2 = new Book("김용현", "한국사", 520);
+//		int newId = dao.insert(book2);
+//		System.out.println(newId);
+//		
+//		System.out.println(dao.selectById(newId));
 		
-		System.out.println(dao.selectById(newId));
+		// delete
+//		dao.deleteById(34);
+//		System.out.println(dao.selectById(34));
+		
+		Book book3 = new Book(1, "박진현", "열심히", 400);
+		dao.update(book3);
+		
 		
 		context.close();
 	}
 }
+

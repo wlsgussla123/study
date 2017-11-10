@@ -7,6 +7,15 @@ public class Book {
 	private Integer pages;
 
 	public Book() {}
+	
+	public Book(Integer id, String author, String title, Integer pages) {
+		super();
+		this.id = id;
+		this.author = author;
+		this.title = title;
+		this.pages = pages;
+	}
+	
 	public Book(String author, String title, Integer pages) {
 		super();
 		this.author = author;

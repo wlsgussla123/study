@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.jinhyeon.domain.Book;
@@ -24,9 +25,16 @@ import com.jinhyeon.domain.Book;
 public class BookDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private static final String COUNT_BOOK = "SELECT COUNT(*) FROM book";
+	
 	private static final String SELECT_BY_ID =
-			"SELECT id, title, author, pages FROM book where id = :id";
+			"SELECT id, title, author, pages FROM book WHERE id = :id";
 
+	private static final String DELETE_BY_ID =
+			"DELETE FROM book WHERE id = :id";
+	
+	private static final String UPDATE_BY_ID =
+			"UPDATE book SET title = :title, author = :author, pages = :pages WHERE id = :id";			
+	
 	private SimpleJdbcInsert insertAction;
 	
 	// dataSource 주입 (connection 연결 객체라고 생각하자.)
@@ -38,7 +46,7 @@ public class BookDao {
 				.usingGeneratedKeyColumns("id");
 	}
 	
-	public Integer insert(Book book) {
+	public int insert(Book book) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(book);
 		return insertAction.executeAndReturnKey(params).intValue();
 	}
@@ -50,8 +58,18 @@ public class BookDao {
 		params.put("id", id);
 		return jdbc.queryForObject(SELECT_BY_ID, params, rowMapper);
 	}
+	
+	public int deleteById(Integer id) {
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		return jdbc.update(DELETE_BY_ID, params);
+	}
+	
+	public int update(Book book) {
+		SqlParameterSource params = new BeanPropertySqlParameterSource(book);
 
-	// 실제 DB 접속 쿼리
+		return jdbc.update(UPDATE_BY_ID, params);
+	}
+	
 	public int countBooks() {
 		Map<String, Object> params = Collections.emptyMap();
 		return jdbc.queryForObject(COUNT_BOOK, params, Integer.class);
