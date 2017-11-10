@@ -7,8 +7,11 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Repository;
 
 // dao는 DB에 접속하고 쿼리를 호출하는 역할.
+
+@Repository
 public class BookDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private static final String COUNT_BOOK = "SELECT COUNT(*) FROM book";

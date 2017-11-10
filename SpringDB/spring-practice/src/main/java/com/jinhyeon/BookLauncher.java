@@ -17,9 +17,10 @@ public class BookLauncher {
 	public static void main(String[] args) {
 		// spring application context가 알아서 factory 설정정보 등록을 하고 bean 목록을 만든다.
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-		DataSource dataSource = context.getBean(DataSource.class); // 의존성 주입이 된다.
-		
-		BookDao dao = new BookDao(dataSource);
+
+//		DataSource dataSource = context.getBean(DataSource.class);
+//		BookDao dao = new BookDao(dataSource); // 의존성 주입이 된다.
+		BookDao dao = context.getBean(BookDao.class);
 		int count = dao.countBooks();	
 		System.out.println(count);
 		
