@@ -2,6 +2,7 @@ package com.jinhyeon.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,7 @@ import com.jinhyeon.domain.User;
 import com.jinhyeon.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
 	@Autowired
 	private UserService userService;

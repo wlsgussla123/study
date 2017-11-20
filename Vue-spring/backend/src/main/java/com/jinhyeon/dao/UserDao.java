@@ -9,7 +9,7 @@ import com.jinhyeon.domain.User;
 
 @Repository
 //@Transactional
-public class UserDao {
+public class UserDao{
 	public static final String NAMESPACE = "com.jinhyeon.mapper.UserMapper.";
 
 	@Autowired
@@ -18,5 +18,4 @@ public class UserDao {
 	public User getUser(int id) {
 		return this.sqlSession.selectOne(NAMESPACE + "getUser", id);
 	}
-
 }
